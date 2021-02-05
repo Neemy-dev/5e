@@ -36,7 +36,7 @@ switch (usescurrent) {
 						let element = html.find('#dice').val();
 						actor.updateEmbeddedEntity({
 						id: item._id, 
-						"data.uses.value" : (uses-element)
+						"data.uses.value" : (usescurrent-element)
 					});
 					let die = new Die({
 						faces: 6,
