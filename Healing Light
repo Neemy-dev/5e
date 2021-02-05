@@ -1,0 +1,52 @@
+//finds healing light on selected actor and sets variable item
+let item = actor.items.find(i => i.data.name ==="Healing Light"); 
+let usescurrent = item.data.data.uses.value; //sets variable usescurrent
+let usesmax = item.data.data.uses.max; //sets variable usesmax
+switch (usescurrent) {
+	case 0:
+		new Dialog ({
+		title: 'Healing Light has no charges left!',
+		buttons: {
+			okay: {
+				icon: '<i class=fas fa-check"></i>',
+				label: 'Okay',
+			}
+		}
+	}).render(true);
+	break;
+	case 1:
+		new Dialog ({
+			title: '1 Charge. Choose Dice to roll.',
+			content: `
+			<form class="flexcol">
+				<div class="form-group">
+					<select id="dice">
+						<option value="0">None</option>
+						<option value="1">1d6</option>
+					</select>
+				</div>
+			</form>
+			`,
+			buttons: {
+				roll:{
+					icon:'<i class="fas fa-check"></i>',
+					label: 'Roll',
+					callback: 
+					function test(html) {
+						let element = html.find('#dice').val();
+						actor.updateEmbeddedEntity({
+						id: item._id, 
+						"data.uses.value" : (uses-element)
+					});
+					let die = new Die({
+						faces: 6,
+						number: (element)
+					}).evaluate();
+
+
+					}
+				}
+			}
+	}).render(true);
+	break;
+}
